@@ -1,6 +1,7 @@
 const catContainer = document.getElementById("categories-container");
 const cardContainer = document.getElementById("cards-container");
 const spinner = document.getElementById("spinner");
+const noDataSection = document.getElementById("no-data-section");
 
 function activeBtn(element) {
   for (let item of catContainer.children) {
@@ -8,6 +9,7 @@ function activeBtn(element) {
     else item.classList = "btn btn-primary";
   }
 }
+
 function secondToHourMinute(second) {
   let result = "";
   if (second) {
@@ -44,6 +46,7 @@ function catDisplayer() {
 catDisplayer();
 
 function cardDisplayer(categoryBtn) {
+  noDataSection.style.display = "none";
   cardContainer.innerHTML = "";
   spinner.style.display = "block";
   fetch(
@@ -51,6 +54,7 @@ function cardDisplayer(categoryBtn) {
   )
     .then((res) => res.json())
     .then((data) => {
+      if (data.data.length === 0) noDataSection.style.display = "block";
       data.data.forEach((item) => {
         const card = document.createElement("div");
         card.classList = "rounded-lg border shadow";
@@ -70,14 +74,16 @@ function cardDisplayer(categoryBtn) {
             <div class="flex-1">
               <h2 class="text-xl font-bold text-black mb-1">${item.title}</h2>
               <div class="flex justify-start items-center gap-2 mb-1">
-                <span>${item.authors[0].profile_name}</span>
+                <span class="text-gray-500">${
+                  item.authors[0].profile_name
+                }</span>
                 ${
                   item.authors[0].verified
                     ? '<img class="w-4" src="images/varification_check_mark.jpg" alt="Verification Icon">'
                     : ""
                 }
               </div>
-              <span>${item.others.views} views</span>
+              <span class="text-gray-500">${item.others.views} views</span>
             </div>
           </div>
         `;

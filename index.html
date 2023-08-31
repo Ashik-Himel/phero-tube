@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +9,13 @@
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
   <!-- Header Section -->
   <header>
     <div class="container">
       <div class="flex flex-wrap justify-center sm:justify-between items-center gap-4 py-6">
-        <img class="w-full max-w-[130px]" src="images/logo.png" alt="Logo">
+        <a href="#/"><img class="w-full max-w-[130px]" src="images/logo.png" alt="Logo"></a>
         <a href="#/" class="btn btn-active btn-ghost">Sort by view</a>
         <a href="blog.html" class="btn btn-primary">Blog</a>
       </div>
@@ -32,8 +34,15 @@
           <span class="loading loading-spinner loading-lg"></span>
         </div>
 
+        <!-- No Data Found Section -->
+        <div id="no-data-section" class="max-w-[450px] mx-auto text-center my-12 hidden">
+          <img class="max-w-[200px] block mx-auto mb-4" src="images/icon.png" alt="No Data Icon">
+          <h2 class="text-3xl font-bold">Oops!! Sorry, There is no content here</h2>
+        </div>
+
         <!-- Cards Section -->
-        <div id="cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-8"></div>
+        <div id="cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 my-8">
+        </div>
       </div>
     </section>
   </main>
@@ -41,4 +50,5 @@
   <!-- JavaScript -->
   <script src="js/script.js"></script>
 </body>
+
 </html>
