@@ -1884,6 +1884,10 @@ details.collapse summary::-webkit-details-marker {
   font-weight: 500;
 }
 
+.font-semibold {
+  font-weight: 600;
+}
+
 .text-\[\#FF1F3D\] {
   --tw-text-opacity: 1;
   color: rgb(255 31 61 / var(--tw-text-opacity));
