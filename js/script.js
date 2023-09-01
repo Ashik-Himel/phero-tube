@@ -59,7 +59,7 @@ function cardDisplayer(categoryBtn, sortByView) {
       if (dataArray.length === 0) noDataSection.style.display = "block";
       else if (sortByView || sortBtn.innerText === "Sort by default") {
         dataArray.sort(
-          (a, b) => parseInt(b?.others?.views) - parseInt(a?.others?.views)
+          (a, b) => parseFloat(b?.others?.views) - parseFloat(a?.others?.views)
         );
       }
       dataArray.forEach((item) => {
@@ -70,9 +70,13 @@ function cardDisplayer(categoryBtn, sortByView) {
             <img class="w-full aspect-[4/3] object-cover rounded-lg" src="${
               item.thumbnail
             }" alt="Thumbnail">
-            <span class="absolute right-2 bottom-2 bg-gray-800 text-white py-1 px-2 rounded-md">${secondToHourMinute(
-              item.others.posted_date
-            )}</span>
+            ${
+              secondToHourMinute(item.others.posted_date)
+                ? `<span class="absolute right-2 bottom-2 bg-gray-800 text-white py-1 px-2 rounded-md">${secondToHourMinute(
+                    item.others.posted_date
+                  )}</span>`
+                : ""
+            }
           </div>
           <div class="flex justify-start items-start gap-4 p-4">
             <img class="w-10 h-10 object-cover rounded-full" src="${
