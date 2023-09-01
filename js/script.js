@@ -2,6 +2,7 @@ const catContainer = document.getElementById("categories-container");
 const cardContainer = document.getElementById("cards-container");
 const spinner = document.getElementById("spinner");
 const noDataSection = document.getElementById("no-data-section");
+const sortBtn = document.getElementById("sort-btn");
 
 function activeBtn(element) {
   for (let item of catContainer.children) {
@@ -45,7 +46,7 @@ function catDisplayer() {
 }
 catDisplayer();
 
-function cardDisplayer(categoryBtn) {
+function cardDisplayer(categoryBtn, sortByView) {
   noDataSection.style.display = "none";
   cardContainer.innerHTML = "";
   spinner.style.display = "block";
@@ -54,8 +55,14 @@ function cardDisplayer(categoryBtn) {
   )
     .then((res) => res.json())
     .then((data) => {
-      if (data.data.length === 0) noDataSection.style.display = "block";
-      data.data.forEach((item) => {
+      const dataArray = data.data;
+      if (dataArray.length === 0) noDataSection.style.display = "block";
+      else if (sortByView || sortBtn.innerText === "Sort by default") {
+        dataArray.sort(
+          (a, b) => parseInt(b?.others?.views) - parseInt(a?.others?.views)
+        );
+      }
+      dataArray.forEach((item) => {
         const card = document.createElement("div");
         card.classList = "rounded-lg border shadow";
         card.innerHTML = `
@@ -95,3 +102,18 @@ function cardDisplayer(categoryBtn) {
     });
   activeBtn(categoryBtn);
 }
+
+sortBtn.addEventListener("click", function () {
+  const activeCatBtn = document.querySelector(
+    "#categories-container .btn-primary"
+  );
+  if (sortBtn.innerText === "Sort by view") {
+    sortBtn.innerText = "Sort by default";
+    sortBtn.classList = "btn btn-primary";
+    cardDisplayer(activeCatBtn, true);
+  } else {
+    sortBtn.innerText = "Sort by view";
+    sortBtn.classList = "btn btn-active btn-ghost";
+    cardDisplayer(activeCatBtn);
+  }
+});
