@@ -38,7 +38,7 @@ function catDisplayer() {
         btn.innerHTML = item.category;
         catContainer.appendChild(btn);
         btn.addEventListener("click", function () {
-          cardDisplayer(this);
+          if (!this.classList.contains("btn-primary")) cardDisplayer(this);
         });
         if (!index) cardDisplayer(btn);
       });
@@ -57,10 +57,13 @@ function cardDisplayer(categoryBtn, sortByView) {
     .then((data) => {
       const dataArray = data.data;
       if (dataArray.length === 0) noDataSection.style.display = "block";
-      else if (sortByView || sortBtn.innerText === "Sort by default") {
+      else if (sortByView) {
         dataArray.sort(
           (a, b) => parseFloat(b?.others?.views) - parseFloat(a?.others?.views)
         );
+      } else {
+        sortBtn.innerText = "Sort by view";
+        sortBtn.removeAttribute("disabled");
       }
       dataArray.forEach((item) => {
         const card = document.createElement("div");
@@ -111,13 +114,7 @@ sortBtn.addEventListener("click", function () {
   const activeCatBtn = document.querySelector(
     "#categories-container .btn-primary"
   );
-  if (sortBtn.innerText === "Sort by view") {
-    sortBtn.innerText = "Sort by default";
-    sortBtn.classList = "btn btn-primary";
-    cardDisplayer(activeCatBtn, true);
-  } else {
-    sortBtn.innerText = "Sort by view";
-    sortBtn.classList = "btn btn-active btn-ghost";
-    cardDisplayer(activeCatBtn);
-  }
+  sortBtn.innerText = "Sorted by view";
+  sortBtn.setAttribute("disabled", "true");
+  cardDisplayer(activeCatBtn, true);
 });
